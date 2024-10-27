@@ -41,7 +41,7 @@ var _ = Describe("Check document's subscription:", func() {
 		conn.Close()
 	})
 
-	When("user subscribed to the document", func() {
+	When("user subscribed to the document", Focus, func() {
 		It("must receive it's updates", func() {
 			var stream pb.CollaborationService_SubscribeToDocumentClient
 			var err error
