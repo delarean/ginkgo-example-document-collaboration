@@ -14,7 +14,7 @@ import (
 	pb "collaboration/proto"
 )
 
-var _ = Describe("User subscribes to a document", func() {
+var _ = Describe("Check document's subscription:", func() {
 	var (
 		ctx    context.Context
 		cancel context.CancelFunc
@@ -41,8 +41,8 @@ var _ = Describe("User subscribes to a document", func() {
 		conn.Close()
 	})
 
-	When("being subscribed to the document", func() {
-		It("user must receive it's updates", func() {
+	When("user subscribed to the document", func() {
+		It("must receive it's updates", func() {
 			var stream pb.CollaborationService_SubscribeToDocumentClient
 			var err error
 

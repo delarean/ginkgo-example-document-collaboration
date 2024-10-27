@@ -13,7 +13,7 @@ import (
 	pb "collaboration/proto"
 )
 
-var _ = Describe("User requests a document", func() {
+var _ = Describe("Check document's request:", func() {
 	var (
 		ctx    context.Context
 		cancel context.CancelFunc
