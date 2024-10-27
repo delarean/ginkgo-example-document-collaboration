@@ -43,6 +43,7 @@ var _ = Describe("Check document's request:", func() {
 		It("must return current state of the document", func() {
 			req := &pb.DocumentRequest{DocumentId: "doc1"}
 			resp, err := client.GetDocument(ctx, req)
+
 			Expect(err).NotTo(HaveOccurred())
 			Expect(resp.DocumentId).To(Equal("doc1"))
 			Expect(resp.Content).NotTo(BeNil())

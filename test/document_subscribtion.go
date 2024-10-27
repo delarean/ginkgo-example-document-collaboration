@@ -73,7 +73,7 @@ var _ = Describe("Check document's subscription:", func() {
 			})
 			time.Sleep(10 * time.Millisecond)
 
-			By("another client send an edit", func() {
+			By("another client sends an edit", func() {
 				anotherClient := pb.NewCollaborationServiceClient(conn)
 				_, err = anotherClient.SendEdit(ctx, &pb.EditRequest{
 					DocumentId: "doc1",
