@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+package collaboration;
+
+option go_package = "./proto";
+
+// Определение сервиса для совместного редактирования
+service CollaborationService {
+  // Подписаться на обновления документа
+  rpc SubscribeToDocument(DocumentSubscriptionRequest) returns (stream DocumentUpdate);
+
+  // Отправить изменение в документе
+  rpc SendEdit(EditRequest) returns (EditResponse);
+
+  // Получить текущее состояние документа
+  rpc GetDocument(DocumentRequest) returns (DocumentResponse);
+}
+
+// Запрос на подписку на обновления документа
+message DocumentSubscriptionRequest {
+  string document_id = 1;
+  User user = 2;
+}
+
+// Сообщение об обновлении документа, отправляемое сервером клиентам
+message DocumentUpdate {
+  string document_id = 1;
+  repeated Edit edits = 2;
+}
+
+// Запрос на внесение изменений в документ
+message EditRequest {
+  string document_id = 1;
+  Edit edit = 2;
+  User user = 3;
+}
+
+// Ответ на запрос о внесении изменений
+message EditResponse {
+  bool success = 1;
+  string message = 2;
+  int64 timestamp = 3;
+}
+
+// Запрос на получение документа
+message DocumentRequest {
+  string document_id = 1;
+}
+
+// Ответ с текущим состоянием документа
+message DocumentResponse {
+  string document_id = 1;
+  string content = 2;
+  repeated User users = 3;
+}
+
+// Информация об изменении
+message Edit {
+  string user_id = 1;
+  int32 position = 2;
+  string text = 3;
+  EditType type = 4;
+  int64 timestamp = 5;
+}
+
+// Тип изменения
+enum EditType {
+  INSERT = 0;
+  DELETE = 1;
+  REPLACE = 2;
+}
+
+// Информация о пользователе
+message User {
+  string user_id = 1;
+  string display_name = 2;
+}
+
+// Дополнительные сообщения для управления курсором и присутствием пользователей
+message CursorPosition {
+  string user_id = 1;
+  int32 position = 2;
+}
+
+message PresenceUpdate {
+  string document_id = 1;
+  User user = 2;
+  PresenceStatus status = 3;
+}
+
+enum PresenceStatus {
+  JOINED = 0;
+  LEFT = 1;
+}
